@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React from 'react'
+import SignIn from './SignInandAdd/SignIn';
+import Header from './Header/Header'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AddRawMaterials from './AddRawMaterials/AddRawMaterials';
+import AddUser from './SignInandAdd/AddUser';
 function App() {
+  const [isLoggedIn,setIsLoggedIn]=React.useState(false);
+  // if(sessionStorage.getItem("user1")){
+  //   // console.log(sessionStorage.getItem("user1"))
+  //   setIsLoggedIn(true)
+  // }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        isLoggedIn? <Home />:  <SignIn setIsLoggedIn={setIsLoggedIn}/>  
+
+      }
     </div>
   );
 }
+const Home=(props)=>{
+  return (
+    <Router>
+      <Header />
+      <Routes>
+        <Route exact path="/" element={ <AddRawMaterials user={props.user}/>  }>
+        
+          {/* <RawMaterialTypes/> */}
+        </Route>
+        <Route path="/myhistory" element={   <div>History</div>}/>
+        
+        <Route path="/help" element={  <div>Help</div>} /> 
+        
+        <Route path="/adduser" element={ <AddUser/>} /> 
 
+    </Routes>
+
+    {/*  */}
+    {/*  */}
+  </Router>
+  )
+}
 export default App;
